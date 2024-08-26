@@ -1,34 +1,53 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Ionicons } from '@expo/vector-icons';
+import { ButtonAdd } from '../components/ButtonAdd';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+  
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: '#121212',
         headerShown: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
+
+          title: 'Projetos',
+          tabBarIcon: ({ color, focused, size }) => (
+            <Ionicons name={focused ? 'diamond' : 'diamond-outline'} color={color} size = {size}/>
+          )
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="tasks"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          title: 'Tarefas',
+          tabBarIcon: ({ color, focused, size }) => (
+            <Ionicons name={focused ? 'add-circle' : 'add-circle-outline'} color={color} size = {size} />
+          ),
+        
+        }}
+      />
+       <Tabs.Screen
+        name="forbiden"
+        options={{
+          title: 'Proibido',
+          tabBarIcon: ({ color, focused, size }) => (
+            <Ionicons name={focused ? 'alert' : 'alert-outline'} color={color} size = {size} />
+          ),
+         
+        }}
+      />
+       <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Configurações',
+          tabBarIcon: ({ color, focused, size }) => (
+            <Ionicons name={focused ? 'settings' : 'settings-outline'} color={color} size = {size} />
           ),
         }}
       />
