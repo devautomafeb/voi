@@ -7,7 +7,8 @@ export default function Home() {
     <View style={styles.container}>
       <Text style={styles.title}>Voi</Text>
       <Text style={styles.description}>
-        Esta é uma ferramenta designada para lhe ajudar a conquistar suas metas focado na simplicidade e objetividade.
+        Esta é uma ferramenta designada para lhe ajudar a conquistar suas metas focado na simplicidade 
+        e objetividade.
       </Text>
       <Link href={'/(tabs)'} style={styles.link}>
         1. Acessar App
@@ -27,11 +28,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
+    fontFamily: 'Roboto-Mono',
     color: '#000', // Preto para o título
     marginBottom: 20,
   },
   description: {
     fontSize: 16,
+    fontFamily: 'Roboto-Mono',
+    fontStyle: 'italic',
     color: '#333', // Preto suave para a descrição
     textAlign: 'center',
     marginBottom: 20,
@@ -40,5 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#007BFF', // Azul para o link
     textDecorationLine: 'underline',
+    fontFamily: 'Roboto-Mono',
   },
 });

@@ -24,9 +24,11 @@ export const Calendar: React.FC<CalendarProps> = ({ onChange, mode, isVisible, o
       mode={mode}
       onConfirm={handleConfirm}
       onCancel={onClose}
-      locale="pt_BR"  // Set the locale for the DateTimePickerModal
-      confirmTextIOS="Confirmar"  // Set confirm button text
-      cancelTextIOS="Cancelar"  // Set cancel button text
+      locale="pt_BR" 
+      confirmTextIOS="Confirmar"  
+      cancelTextIOS="Cancelar"  
+      textColor='#000'
+      buttonTextColorIOS='#444'
     />
   );
 };

@@ -1,10 +1,22 @@
-import { View, Text} from "react-native";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
+interface ListEmptyProps {
+  message: string;
+}
 
-export function ListEmpty() {
+export function ListEmpty({ message }: ListEmptyProps) {
   return (
     <View>
-      <Text>1. Cadastre seu primeiro projeto</Text>
+      <Text style={styles.firstMessage}>1. {message}</Text>
     </View>
-  )
+  );
 }
+
+const styles = StyleSheet.create({
+  firstMessage: {
+    padding: 30,
+    fontSize: 16,
+    fontFamily: 'Roboto-Mono',
+  },
+});

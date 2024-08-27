@@ -1,33 +1,33 @@
 import React, { useContext, useState } from 'react';
 import { View, FlatList, StyleSheet, StatusBar } from 'react-native';
 import { ButtonAdd } from '../components/ButtonAdd';
-import { CardTask } from '../components/CardTask';
 import { ListEmpty } from '../components/ListEmpty';
-import { TaskContext } from '../hooks/tasksHook';
-import { FormTask } from '../components/FormTask';
+import { FormStop } from '../components/FormStop';
+import { StopContext } from '../hooks/stopHook';
+import {CardStop} from '../components/CardStop';
 
-export default function Tasks() {
+export default function Stop() {
   const [modalVisible, setModalVisible] = useState(false);
-  const { tasks, delTask, checkTask } = useContext(TaskContext);
+  const { stops, delStop } = useContext(StopContext);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={tasks}
+        data={stops}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <CardTask
+          <CardStop
             id={item.id}
-            task={item.task}
-            onDelete={() => delTask(item)}
-            onComplete={() => checkTask(item)} />
+            stop={item.stop}
+            onDelete={() => delStop(item)}
+           />
         )}
-        ListEmptyComponent={<ListEmpty message='Cadastre sua primeira tarefa' />}
+        ListEmptyComponent={<ListEmpty message='Cadastre seu primeiro Não' />}
         contentContainerStyle={{ paddingRight: 10, paddingLeft:10 }}
         style={{ flex: 1, alignSelf: 'stretch' }}
       />
-      <ButtonAdd onPress={() => setModalVisible(true)} text={'Adicionar Tarefa'} />
-      <FormTask visible={modalVisible} onClose={() => setModalVisible(false)} />
+      <ButtonAdd onPress={() => setModalVisible(true)} text={'Adicionar'} />
+      <FormStop visible={modalVisible} onClose={() => setModalVisible(false)} />
     </View>
   );
 }

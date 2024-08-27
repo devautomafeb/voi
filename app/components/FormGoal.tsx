@@ -3,11 +3,11 @@ import { Modal, View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } fro
 import Slider from '@react-native-community/slider';
 import { Calendar } from './Calendar';
 import { GoalContext } from '../hooks/goals';
-import { Goal, projectData } from '../reducers/types';
+import { Goal, projectData } from '../reducers/goalTypes';
 import { MaterialIcons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
-interface FormGoalProps {
+interface FormGoalProps {   
   visible: boolean;
   onClose: () => void;
 }
@@ -27,7 +27,7 @@ export const FormGoal: React.FC<FormGoalProps> = ({ visible, onClose }) => {
     if (project.name && importance && startDate && endDate && endDate >= startDate) {
 
       const quality = classifyProject(importance);
-
+      
       const goal: Goal = {
         id: Math.round(100000 * Math.random()),
         project,
@@ -98,7 +98,7 @@ export const FormGoal: React.FC<FormGoalProps> = ({ visible, onClose }) => {
           <Text style={styles.label}>Descrição do Projeto</Text>
           <TextInput
             placeholder="Descrição do Projeto"
-            style={[styles.input, { minHeight: 60 }]}
+            style={[styles.input, { minHeight:60, maxHeight: 120 }]}
             value={project.description}
             onChangeText={(text) => setProject({ ...project, description: text })}
             multiline={true}
@@ -133,7 +133,7 @@ export const FormGoal: React.FC<FormGoalProps> = ({ visible, onClose }) => {
             />
           </View>
 
-          <Text style={styles.label}>Importância do Projeto : {classifyProject(importance)}  {importance}% </Text>
+          <Text style={styles.label}>Importância: {classifyProject(importance)}  {importance}% </Text>
           <Slider
             style={{ width: '100%' }}
             minimumValue={0}
@@ -185,12 +185,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto-Mono',
   },
   label: {
     alignSelf: 'flex-start',
     fontSize: 16,
     marginBottom: 5,
-    marginTop: 5
+    marginTop: 5,
+    fontFamily: 'Roboto-Mono',
   },
   input: {
     width: '100%',
@@ -200,10 +202,12 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlignVertical: 'top',
     marginBottom: 20,
+    fontFamily: 'Roboto-Mono',
   },
   dateContainer: {
     width: '100%',
     marginBottom: 20,
+    fontFamily: 'Roboto-Mono',
   },
   datePicker: {
     flexDirection: 'row',
@@ -213,10 +217,12 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
+    fontFamily: 'Roboto-Mono',
   },
   dateText: {
     fontSize: 16,
     color: '#333',
+    fontFamily: 'Roboto-Mono',
   },
   button: {
     backgroundColor: '#333333',
@@ -225,12 +231,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '100%',
     alignItems: 'center',
+    fontFamily: 'Roboto-Mono',
   },
   buttonClose: {
     backgroundColor: '#f44336',
+    fontFamily: 'Roboto-Mono',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'Roboto-Mono',
   },
 });

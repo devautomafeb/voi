@@ -12,7 +12,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Projetos</Text>
       <FlatList
         data={goals}
         keyExtractor={item => item.id.toString()}
@@ -25,14 +24,14 @@ export default function HomeScreen() {
             endDate={item.endDate}
             completed={item.completed}
             onDelete={() => delGoals(item)}
-            onComplete={() => checkGoals(item)} />
+            onComplete={() => checkGoals(item)}
+          />
         )}
-        ListEmptyComponent={ListEmpty}
-        contentContainerStyle={{ paddingRight: 10, paddingLeft:10 }}
+        ListEmptyComponent={<ListEmpty message='Cadastre seu primeiro projeto.' />}
+        contentContainerStyle={{ paddingRight: 10, paddingLeft: 10 }}
         style={{ flex: 1, alignSelf: 'stretch' }}
-
       />
-      <ButtonAdd title="Add Goal" onPress={() => setModalVisible(true)} />
+      <ButtonAdd onPress={() => setModalVisible(true)} text={'Adicionar Projeto'} />
       <FormGoal visible={modalVisible} onClose={() => setModalVisible(false)} />
     </View>
   );
@@ -50,5 +49,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    fontFamily: 'Roboto-Mono',
   },
 });
