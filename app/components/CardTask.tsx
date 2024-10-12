@@ -9,15 +9,23 @@ interface CardTaskProps extends Task {
 }
 
 export function CardTask({ task, onDelete, onComplete }: CardTaskProps) {
-
   const [modalVisible, setModalVisible] = useState(false);
   const formattedDate = new Date(task.date).toLocaleDateString();
 
   return (
     <View style={styles.card}>
-      <Text style={styles.name}>Tarefa: {task.description}</Text>
-      <Text style={styles.project}>Data de Criação: {formattedDate}</Text>
-      <Text style={styles.completed}>Situação: {task.completed?'Tarefa realizada.':'Tarefa não realizada.'}</Text>
+      <TouchableOpacity onPress={onComplete} style={styles.checkIcon}>
+        <MaterialIcons 
+          name={task.completed ? "check-circle" : "radio-button-unchecked"} 
+          size={24} 
+          color={task.completed ? "green" : "black"} 
+        />
+      </TouchableOpacity>
+      
+      <View style={styles.taskDetails}>
+        <Text style={styles.name}>{task.description}</Text>
+        <Text style={styles.date}>{formattedDate}</Text>
+      </View>
 
       <TouchableOpacity style={styles.moreIcon} onPress={() => setModalVisible(true)}>
         <MaterialIcons name="more-vert" size={24} color="black" />
@@ -31,19 +39,14 @@ export function CardTask({ task, onDelete, onComplete }: CardTaskProps) {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
-            <TouchableOpacity onPress={onComplete} style={styles.modalSettings}>
-              <MaterialIcons name={task.completed ? "check-circle" : "check-circle-outline"} size={24} color="black" />
-              <Text style={styles.optionText}> Tarefa concluída.</Text>
-            </TouchableOpacity>
-            <View style={styles.separator} />
             <TouchableOpacity onPress={onDelete} style={styles.modalSettings}>
               <MaterialIcons name="delete" size={24} color="black" />
-              <Text style={styles.optionText}> Excluir tarefa.</Text>
+              <Text style={styles.optionText}>Excluir tarefa</Text>
             </TouchableOpacity>
             <View style={styles.separator} />
-            <TouchableOpacity onPress={()=>setModalVisible(false)} style={styles.modalSettings}>
+            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.modalSettings}>
               <MaterialIcons name="close" size={24} color="black" />
-              <Text style={styles.optionText}> Fechar.</Text>
+              <Text style={styles.optionText}>Fechar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -58,12 +61,20 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     marginBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 6 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 3,
     minWidth: '85%',
+  },
+  checkIcon: {
+    marginRight: 15,
+  },
+  taskDetails: {
+    flex: 1,
   },
   name: {
     fontSize: 16,
@@ -72,27 +83,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: 'Roboto-Mono',
   },
-  project: {
-    fontSize: 16,
-    color: '#333',
-    marginVertical: 5,
-    fontFamily: 'Roboto-Mono',
-  },
-  importance: {
-    fontSize: 14,
-    color: '#444',
-    marginVertical: 5,
-  },
-  completed: {
+  date: {
     fontSize: 14,
     color: '#666',
-    marginVertical: 5,
-    fontFamily: 'Roboto-Mono',
-  },
-  dates: {
-    fontSize: 14,
-    color: '#666',
-    paddingTop:5,
     fontFamily: 'Roboto-Mono',
   },
   moreIcon: {
@@ -111,22 +104,11 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
     borderRadius: 10,
-    alignItems: 'baseline'
-  },
-  modalCloseIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 20,
-    fontFamily: 'Roboto-Mono',
+    alignItems: 'baseline',
   },
   modalSettings: {
     flexDirection: 'row',
     paddingVertical: 10,
-    fontFamily: 'Roboto-Mono',
   },
   optionText: {
     fontSize: 16,

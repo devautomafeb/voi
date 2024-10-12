@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Calendar } from './Calendar';
@@ -24,7 +24,7 @@ export const FormGoal: React.FC<FormGoalProps> = ({ visible, onClose }) => {
   const [showEndPicker, setShowEndPicker] = useState(false);
 
   const handleAddGoal = () => {
-    if (project.name && importance && startDate && endDate && endDate >= startDate) {
+    if (project.name && importance && startDate && endDate >= startDate) {
 
       const quality = classifyProject(importance);
       

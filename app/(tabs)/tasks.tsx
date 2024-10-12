@@ -9,6 +9,7 @@ import { FormTask } from '../components/FormTask';
 export default function Tasks() {
   const [modalVisible, setModalVisible] = useState(false);
   const { tasks, delTask, checkTask } = useContext(TaskContext);
+  
 
   return (
     <View style={styles.container}>
