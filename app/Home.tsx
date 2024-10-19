@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('./assets/images/logo.png')} // Substitua pelo caminho correto da sua imagem
+        source={require('./assets/images/logo.png')}
         style={styles.logo}
       />
       <Text style={styles.description}>
@@ -35,10 +35,11 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
-    marginBottom: 20,
+    marginBottom: 50,
   },
   description: {
     fontSize: 16,
+    lineHeight:24,
     fontFamily: 'Roboto-Mono',
     fontStyle: 'italic',
     color: '#333',
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop:50,
+    marginTop:90,
     backgroundColor: '#333', // Azul elegante para o botão
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -61,9 +62,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     marginLeft: 10,
-    fontSize: 18,
+    fontSize: 22,
     color: '#fff',
     fontWeight: 'bold',
-    fontFamily: 'Roboto-Mono',
+    fontFamily: 'Barlow-Condensed',
   },
 });

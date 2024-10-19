@@ -6,8 +6,8 @@ import { GoalContextProvider } from "./hooks/goals";
 import { TaskContextProvider } from "./hooks/tasksHook";
 import { StopContextProvider } from "./hooks/stopHook";
 import { IdeaContextProvider } from "./hooks/ideaHook";
+import { ThemeProvider } from './hooks/themeContext'; 
 
-// Mantenha a splash screen visível enquanto as fontes carregam
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -20,10 +20,9 @@ export default function RootLayout() {
     let hideSplashTimeout: string | number | NodeJS.Timeout | undefined;
 
     if (fontsLoaded) {
-      // Aguarde 4 segundos antes de ocultar a splash screen
       hideSplashTimeout = setTimeout(() => {
         SplashScreen.hideAsync();
-      }, 4000); // 4000 milissegundos = 4 segundos
+      }, 7000); // 7000 milissegundos = 7 segundos
     }
 
     return () => {
@@ -38,36 +37,38 @@ export default function RootLayout() {
   }
 
   return (
-    <GoalContextProvider>
-      <TaskContextProvider>
-        <StopContextProvider>
-          <IdeaContextProvider>
-            <Stack
-              screenOptions={{
-                headerStyle: {
-                  backgroundColor: '#030303',
-                },
-                headerTintColor: '#fefefe',
-                headerTitleStyle: { 
-                  fontSize: 20,
-                  fontFamily: 'Roboto-Mono', // Fonte padrão para os títulos
-                },
-              }}>
-              <Stack.Screen 
-                name="(tabs)" 
-                options={{ 
-                  title: " VOI ", 
-                  headerTitleStyle: { 
-                    fontFamily: 'Barlow-Condensed', // Aplicando a fonte Barlow Condensed
-                    fontSize: 24, // Ajuste o tamanho do título se necessário
+    <ThemeProvider>
+      <GoalContextProvider>
+        <TaskContextProvider>
+          <StopContextProvider>
+            <IdeaContextProvider>
+              <Stack
+                screenOptions={{
+                  headerStyle: {
+                    backgroundColor: '#030303',
                   },
-                }} 
-              />
-              <Stack.Screen name="index" options={{ title: "  " }} />
-            </Stack>
-          </IdeaContextProvider>
-        </StopContextProvider>
-      </TaskContextProvider>
-    </GoalContextProvider>
+                  headerTintColor: '#fefefe',
+                  headerTitleStyle: {
+                    fontSize: 20,
+                    fontFamily: 'Barlow-Condensed',
+                  },
+                }}>
+                <Stack.Screen 
+                  name="(tabs)" 
+                  options={{ 
+                    title: "Voi", // Removido espaço extra
+                    headerTitleStyle: { 
+                      fontFamily: 'Barlow-Condensed',
+                      fontSize: 24,
+                    },
+                  }} 
+                />
+                <Stack.Screen name="index" options={{ title: " " }} />
+              </Stack>
+            </IdeaContextProvider>
+          </StopContextProvider>
+        </TaskContextProvider>
+      </GoalContextProvider>
+    </ThemeProvider>
   );
 }

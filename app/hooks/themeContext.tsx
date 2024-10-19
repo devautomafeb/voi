@@ -1,4 +1,4 @@
-
+import React, { createContext, useContext, ReactNode } from 'react';
 
 // Definição do tema com todas as cores
 export const Theme01 = {
@@ -20,6 +20,7 @@ export const Theme01 = {
     GRAY_LIGHT: '#B0B0B0', // Cinza Claro
     GRAY_MEDIUM: '#707070', // Cinza Médio
     GRAY_DARK: '#333333', // Cinza Escuro
+    LIGHT_GREEN: '#A8DADC',
     BLUE_SOFT: '#4A90E2', // Azul Suave
     PURPLE_LIGHT: '#9B59B6', // Roxo Claro
 
@@ -42,4 +43,13 @@ export const Theme01 = {
   },
 };
 
+// Criação do contexto
+const ThemeContext = createContext(Theme01);
 
+// Provedor de Tema
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  return <ThemeContext.Provider value={Theme01}>{children}</ThemeContext.Provider>;
+};
+
+// Hook para acessar o tema
+export const useTheme = () => useContext(ThemeContext);

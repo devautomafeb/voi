@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import dayjs from 'dayjs';
-import 'dayjs/locale/pt-br';  // Import the Portuguese locale
+import 'dayjs/locale/pt-br'; // Importa a localidade em português
+import { useTheme } from '../hooks/themeContext'; // Importa o hook useTheme
 
-dayjs.locale('pt-br');  // Set dayjs to use the Portuguese locale
+dayjs.locale('pt-br'); // Define o dayjs para usar a localidade em português
 
 interface CalendarProps {
   onChange: (date: Date) => void;
@@ -13,6 +14,8 @@ interface CalendarProps {
 }
 
 export const Calendar: React.FC<CalendarProps> = ({ onChange, mode, isVisible, onClose }) => {
+  const theme = useTheme(); // Usa o hook useTheme para obter as cores do tema
+
   const handleConfirm = (date: Date) => {
     onChange(date);
     onClose();
@@ -24,11 +27,11 @@ export const Calendar: React.FC<CalendarProps> = ({ onChange, mode, isVisible, o
       mode={mode}
       onConfirm={handleConfirm}
       onCancel={onClose}
-      locale="pt_BR" 
-      confirmTextIOS="Confirmar"  
-      cancelTextIOS="Cancelar"  
-      textColor='#000'
-      buttonTextColorIOS='#444'
+      locale="pt_BR"
+      confirmTextIOS="Confirmar"
+      cancelTextIOS="Cancelar"
+      textColor={theme.COLORS.PRIMARY} // Usa a cor primária do tema
+      buttonTextColorIOS={theme.COLORS.PRIMARY} // Usa a cor secundária do tema
     />
   );
 };

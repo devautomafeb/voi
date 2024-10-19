@@ -17,7 +17,7 @@ export function CardTask({ task, onDelete, onComplete }: CardTaskProps) {
       <TouchableOpacity onPress={onComplete} style={styles.checkIcon}>
         <MaterialIcons 
           name={task.completed ? "check-circle" : "radio-button-unchecked"} 
-          size={24} 
+          size={28} 
           color={task.completed ? "green" : "black"} 
         />
       </TouchableOpacity>

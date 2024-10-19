@@ -16,7 +16,7 @@ export function ListEmpty({ message }: ListEmptyProps) {
 const styles = StyleSheet.create({
   firstMessage: {
     padding: 30,
-    fontSize: 16,
-    fontFamily: 'Roboto-Mono',
+    fontSize: 20,
+    fontFamily: 'Barlow-Condensed',
   },
 });

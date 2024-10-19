@@ -1,38 +1,67 @@
-import React, { ReactNode, createContext, useReducer } from 'react';
-import { ADD_STOP, DEL_STOP, Stop, StopContextType } from '../reducers/stopTypes';
+import React, { ReactNode, createContext, useReducer, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ADD_STOP, DEL_STOP, INIT_STOPS, Stop, StopContextType } from '../reducers/stopTypes';
 import { stopReducer } from '../reducers/stopReducer';
 
-
 export const StopContext = createContext<StopContextType>({
-    stops: [],
-    addStop: (todo: Stop) => { },
-    delStop: (todo: Stop) => { },
+  stops: [],
+  addStop: (todo: Stop) => {},
+  delStop: (todo: Stop) => {},
 });
 
-interface TaskContextProviderProps {
-    children: ReactNode
+interface StopContextProviderProps {
+  children: ReactNode;
 }
 
-export function StopContextProvider({ children }: TaskContextProviderProps) {
+export function StopContextProvider({ children }: StopContextProviderProps) {
+  const [stops, dispatch] = useReducer(stopReducer, []);
 
-    const [stops, dispatch] = useReducer(stopReducer, []);
-
-    function addStop(todo: Stop) {
-        dispatch({ type: ADD_STOP, payload: todo });
+  // Carregar paradas salvas do AsyncStorage ao inicializar
+  useEffect(() => {
+    const loadStops = async () => {
+      try {
+        const savedStops = await AsyncStorage.getItem('stops');
+        if (savedStops) {
+          dispatch({ type: INIT_STOPS, payload: JSON.parse(savedStops) });
+        }
+      } catch (error) {
+        console.error('Failed to load stops from storage', error);
+      }
     };
 
-    function delStop(todo: Stop) {
-        dispatch({ type: DEL_STOP, payload: todo });
-    };
+    loadStops();
+  }, []);
 
-    return (
-        <StopContext.Provider
-            value={{
-                stops,
-                addStop,
-                delStop
-            }}>
-            {children}
-        </StopContext.Provider>
-    );
-};
+  // Função para salvar paradas no AsyncStorage
+  const saveStopsToStorage = async (newStops: Stop[]) => {
+    try {
+      await AsyncStorage.setItem('stops', JSON.stringify(newStops));
+    } catch (error) {
+      console.error('Failed to save stops to storage', error);
+    }
+  };
+
+  function addStop(todo: Stop) {
+    const updatedStops = [...stops, todo];
+    dispatch({ type: ADD_STOP, payload: todo });
+    saveStopsToStorage(updatedStops); // Salvar as paradas atualizadas
+  }
+
+  function delStop(todo: Stop) {
+    const updatedStops = stops.filter(t => t.id !== todo.id);
+    dispatch({ type: DEL_STOP, payload: todo });
+    saveStopsToStorage(updatedStops); // Salvar as paradas atualizadas
+  }
+
+  return (
+    <StopContext.Provider
+      value={{
+        stops,
+        addStop,
+        delStop,
+      }}
+    >
+      {children}
+    </StopContext.Provider>
+  );
+}

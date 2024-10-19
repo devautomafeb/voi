@@ -1,24 +1,28 @@
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../hooks/themeContext'; // Importando o useTheme
 
 export function ButtonAdd(props: any) {
+    const theme = useTheme(); // Usando o hook useTheme
+
     return (
         <View style={styles.separator}>
-            <TouchableOpacity style={[styles.button, { marginTop: 10 }]} onPress={props.onPress}>
+            <TouchableOpacity 
+                style={[styles.button, { backgroundColor: '#333', marginTop: 10 }]} 
+                onPress={props.onPress}
+            >
                 <Text style={styles.buttonText}>{props.text}</Text>
             </TouchableOpacity>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     separator: {
         width: '100%',
-        borderTopColor:'#ccc',
-        borderTopWidth:1
+        borderTopColor: '#ccc',
+        borderTopWidth: 1
     },
     button: {
-        backgroundColor: '#333333',
         borderRadius: 20,
         padding: 10,
         width: '100%',
@@ -30,6 +34,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 16,
-        fontFamily: 'Roboto-Mono',
+        fontFamily: 'Barlow-Condensed',
     },
 });
