@@ -38,19 +38,37 @@ export function Card({ project, importance, startDate, endDate, completed, onDel
   };
 
   return (
-    
-    <View style={[styles.card, { backgroundColor: COLORS.CARD_BACKGROUND, shadowColor: COLORS.SHADOW_COLOR }]}>
-      {/* Se o card estiver em modo simplificado e não for concluído */}
+    <View 
+      style={[
+        styles.card, 
+        { 
+          backgroundColor: isSimplified && completed ? COLORS.GREEN : COLORS.CARD_BACKGROUND, 
+          shadowColor: COLORS.SHADOW_COLOR 
+        }
+      ]}
+    >
       <TouchableOpacity onPress={() => { setModalVisible(false); setFullscreenModalVisible(true); }} style={styles.modalSettings}>
-           
+        
       {isSimplified ? (
         <View>
           <Text style={[styles.name, { color: COLORS.TEXT_PRIMARY }]}>Projeto: {project.name}</Text>
-          <Text style={[styles.dates, { color: COLORS.TEXT_SECONDARY }]}>
-            {remainingDays > 0
-              ? `Restam ${remainingDays} dias para finalizar.`
-              : 'O prazo está terminado.'}
-          </Text>
+
+          {completed &&(
+            <>
+            <View style={[styles.separator, { backgroundColor: COLORS.SEPARATOR }]} />
+              <Text style={[styles.dates, { color: COLORS.TEXT_SECONDARY }]}>Projeto concluído</Text>
+              </>
+            )}
+          {!completed && (
+            <>
+              <View style={[styles.separator, { backgroundColor: COLORS.SEPARATOR }]} />
+              <Text style={[styles.dates, { color: COLORS.TEXT_SECONDARY }]}>
+                {remainingDays > 0
+                  ? `Restam ${remainingDays} dias para finalizar.`
+                  : 'O prazo está terminado.'}
+              </Text>
+            </>
+          )}
         </View>
       ) : (
         <View>
@@ -113,19 +131,30 @@ export function Card({ project, importance, startDate, endDate, completed, onDel
         onRequestClose={closeModal}
       >
         <View style={styles.fullscreenModalContainer}>
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={[styles.modalTitle, { color: COLORS.TEXT_PRIMARY }]}>Detalhes do Projeto</Text>
-            <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Nome: {project.name}</Text>
-            <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Descrição: {project.description}</Text>
-            <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Prioridade: {importance}</Text>
-            <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Situação: {completed ? 'Finalizado' : 'Não finalizado'}</Text>
-            <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Duração: de {formattedStartDate} até {formattedEndDate}</Text>
-            <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Restam {remainingDays} dias.</Text>
-            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-              <Text style={[styles.closeButtonText, { color: COLORS.RED }]}>Fechar</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
+  {/* Header com título e botão de fechar */}
+  <View style={[styles.modalHeader, { backgroundColor: COLORS.GRAY_LIGHT}]}>
+    <Text style={[styles.headerTitle, { color: COLORS.TEXT_PRIMARY }]}>Detalhes do Projeto</Text>
+    <TouchableOpacity onPress={closeModal} style={styles.headerCloseButton}>
+      <MaterialIcons name="close" size={28} color={COLORS.RED} />
+    </TouchableOpacity>
+  </View>
+
+  {/* Conteúdo do modal */}
+  <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Nome: {project.name}</Text>
+    <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Descrição: {project.description}</Text>
+    <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Prioridade: {importance}</Text>
+    <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Situação: {completed ? 'Finalizado' : 'Não finalizado'}</Text>
+    <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Duração: de {formattedStartDate} até {formattedEndDate}</Text>
+    <Text style={[styles.modalText, { color: COLORS.TEXT_PRIMARY }]}>Restam {remainingDays} dias.</Text>
+    
+    {/* Botão de fechar na parte inferior */}
+    <TouchableOpacity onPress={closeModal} style={[styles.closeButton, { backgroundColor: COLORS.RED }]}>
+      <Text style={[styles.closeButtonText, { color: COLORS.TEXT_LIGHT }]}>Fechar</Text>
+    </TouchableOpacity>
+  </ScrollView>
+</View>
+
       </Modal>
       
       {/* Modal de opções */}
@@ -144,7 +173,7 @@ export function Card({ project, importance, startDate, endDate, completed, onDel
                 color={COLORS.GREEN} 
               />
               <Text style={[styles.optionText, { color: COLORS.TEXT_PRIMARY }]}>
-              {completed ? 'Projeto finalizado.' : 'Projeto não completado.'}
+              {completed ? 'Finalizado.' : 'Não finalizado.'}
               </Text>
             </TouchableOpacity>
             <View style={[styles.separator, { backgroundColor: COLORS.SEPARATOR }]} />
@@ -173,111 +202,98 @@ export function Card({ project, importance, startDate, endDate, completed, onDel
 const styles = StyleSheet.create({
   card: {
     padding: 20,
-    borderRadius: 12,
-    marginBottom: 20,
-    shadowOffset: { width: 2, height: 6 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 3,
-    minWidth: '85%',
+    marginBottom: 16,
+    borderRadius: 10,
+    elevation: 5,
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
   },
   name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    fontFamily: 'Barlow-Condensed',
-  },
-  project: {
     fontSize: 20,
-    marginLeft: 4,
-    marginVertical: 5,
-    fontFamily: 'Barlow-Condensed',
-  },
-  importance: {
-    fontSize: 18,
-    marginLeft: 8,
-    marginVertical: 5,
-    fontFamily: 'Barlow-Condensed',
-  },
-  completed: {
-    fontSize: 18,
-    marginLeft: 8,
-    marginVertical: 5,
-    fontFamily: 'Barlow-Condensed',
+    fontWeight: 'bold',
   },
   dates: {
-    fontSize: 18,
-    marginLeft: 8,
-    paddingTop: 5,
-    fontFamily: 'Barlow-Condensed',
+    fontSize: 14,
   },
   moreIcon: {
     position: 'absolute',
-    top: 10,
+    top: 20,
     right: 10,
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  fullscreenModalContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    paddingTop: 50,
-  },
-  scrollContainer: {
-    padding: 20,
-    width: '100%',
-    alignItems: 'flex-start',
   },
   modalView: {
-    width: 300,
-    padding: 20,
+    width: '80%',
     borderRadius: 10,
-    alignItems: 'baseline',
+    padding: 20,
+    elevation: 10,
   },
-  modalTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    fontFamily: 'Barlow-Condensed',
-  },
-  modalText: {
+  optionText: {
     fontSize: 18,
-    marginBottom: 10,
-    fontFamily: 'Barlow-Condensed',
-  },
-  closeButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-  },
-  closeButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
   modalSettings: {
     flexDirection: 'row',
-    paddingVertical: 10,
-  },
-  optionText: {
-    fontSize: 16,
-    marginLeft: 10,
+    alignItems: 'center',
   },
   separator: {
-    height: 1,
-    width: '100%',
     marginVertical: 10,
+    height: 1,
+  },
+  fullscreenModalContainer: {
+    flex: 1,
+  },
+  scrollContainer: {
+    padding: 20,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  closeButton: {
+    alignSelf: 'center',
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 10,
+  },
+  closeButtonText: {
+    fontSize: 18,
   },
   textWithIcon: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8, // Espaçamento entre as linhas
+    marginBottom: 5,
+  },
+  project: {
+    fontSize: 16,
+    marginLeft: 5,
+    marginBottom:5
+  },
+  importance: {
+    fontSize: 16,
+    marginLeft: 5,
+    marginBottom:5
+  },
+  completed: {
+    fontSize: 16,
+    marginLeft: 5,
+    marginBottom:5
+  },
+  modalHeader: {
+    padding: 10,
+    marginTop:20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  headerCloseButton: {
+    padding: 5,
   },
 });

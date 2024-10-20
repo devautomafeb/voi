@@ -7,7 +7,7 @@ export function ButtonAdd(props: any) {
     return (
         <View style={styles.separator}>
             <TouchableOpacity 
-                style={[styles.button, { backgroundColor: '#333', marginTop: 10 }]} 
+                style={[styles.button, { backgroundColor: '#333'}]} 
                 onPress={props.onPress}
             >
                 <Text style={styles.buttonText}>{props.text}</Text>
@@ -18,9 +18,11 @@ export function ButtonAdd(props: any) {
 
 const styles = StyleSheet.create({
     separator: {
-        width: '100%',
-        borderTopColor: '#ccc',
-        borderTopWidth: 1
+        textAlign:'center',
+        width:'92%',
+        borderRadius:10,
+        margin:5,
+        marginTop:10
     },
     button: {
         borderRadius: 20,
@@ -28,12 +30,9 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-    buttonClose: {
-        backgroundColor: '#f44336',
-    },
     buttonText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 20,
         fontFamily: 'Barlow-Condensed',
     },
 });

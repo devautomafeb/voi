@@ -38,10 +38,9 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   description: {
-    fontSize: 16,
+    fontSize: 20,
     lineHeight:24,
-    fontFamily: 'Roboto-Mono',
-    fontStyle: 'italic',
+    fontFamily: 'Barlow-Condensed',
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,

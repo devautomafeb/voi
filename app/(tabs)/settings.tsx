@@ -19,20 +19,13 @@ export default function Settings() {
       <View style={styles(theme).section}>
         <Text style={styles(theme).sectionHeader}>Sobre</Text>
         <Text style={styles(theme).aboutText}>
-          Esta aplicação foi desenvolvida para gerenciar metas, tarefas e ideias de forma eficiente, 
-          integrando persistência de dados e personalização de temas.
+          Esta aplicação foi desenvolvida para gerenciar metas, tarefas e ideias de forma simples e objetiva
+        </Text>
+        <Text style={styles(theme).aboutText}>
+          Sua principal função é tentar lembrarmos do nosso norte para alcançarmos objetivos de longo prazo e muito esforço.
         </Text>
       </View>
 
-      {/* Seção de Textos */}
-      <View style={styles(theme).section}>
-        <Text style={styles(theme).sectionHeader}>Textos para Leitura</Text>
-        {texts.map((text, index) => (
-          <TouchableOpacity key={index} style={styles(theme).textButton}>
-            <Text style={styles(theme).text}>{text}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
     </View>
   );
 }
@@ -50,6 +43,7 @@ const styles = (theme: any) =>
     },
     sectionHeader: {
       fontSize: 22,
+      marginTop:10,
       fontWeight: 'bold',
       color: theme.COLORS.PRIMARY,
       marginBottom: 10,

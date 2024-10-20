@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
@@ -58,9 +58,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Configurações',
+          title: 'Sobre',
           tabBarIcon: ({ color, focused, size }) => (
-            <Ionicons name={focused ? 'settings' : 'settings-outline'} color={color} size={size} />
+            <MaterialIcons name={focused ? 'info' : 'info-outline'} color={color} size={size} />
           ),
         }}
       />
