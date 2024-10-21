@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { ButtonAdd } from '../components/ButtonAdd';
 import { FormGoal } from '../components/FormGoal';
 import { Card } from '../components/Card';
 import { ListEmpty } from '../components/ListEmpty';
 import { GoalContext } from '../hooks/goals';
-import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons'; // Importar ícones adicionais
 import { useTheme } from '../hooks/themeContext'; // Importar o hook de tema
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,27 +34,41 @@ export default function HomeScreen() {
   return (
     <View style={[styles.container, { backgroundColor: COLORS.WHITE_BACKGROUND }]}>
       <View style={[styles.header, { backgroundColor: COLORS.PRIMARY }]}>
-        {/* Botão para expandir ou simplificar a lista */}
-         
-        
-        <View style={styles.iconGroup}>
+        {/* Grupo de textos para filtros e expandir/simplificar a lista */}
+        <View style={styles.textGroup}>
 
-          {/* Botão para filtrar apenas projetos concluídos */}
-          <TouchableOpacity onPress={() => setFilter('completed')}>
-              <Text style={[styles.headerTitle, { color: COLORS.SECONDARY }]}>  Concluídos  </Text>
+          {/* Texto para filtrar apenas projetos concluídos */}
+          <TouchableOpacity onPress={() => setFilter('completed')} style={styles.textButton}>
+            <Text style={[
+              styles.filterText, 
+              { color: filter === 'completed' ? COLORS.YELLOW : COLORS.SECONDARY }
+            ]}>
+              Concluídos
+            </Text>
           </TouchableOpacity>
 
-          {/* Botão para filtrar apenas projetos não concluídos */}
-          <TouchableOpacity onPress={() => setFilter('notCompleted')}>
-              <Text style={[styles.headerTitle, { color: COLORS.SECONDARY }]}>Não concluídos</Text>
+          {/* Texto para filtrar apenas projetos não concluídos */}
+          <TouchableOpacity onPress={() => setFilter('notCompleted')} style={styles.textButton}>
+            <Text style={[
+              styles.filterText, 
+              { color: filter === 'notCompleted' ? COLORS.YELLOW : COLORS.SECONDARY }
+            ]}>
+              Não Concluídos
+            </Text>
           </TouchableOpacity>
 
-          {/* Botão para mostrar todos os projetos */}
-          <TouchableOpacity onPress={() => setFilter('all')}>
-              <Text style={[styles.headerTitle, { color: COLORS.SECONDARY }]}>    Todos     </Text>
+          {/* Texto para mostrar todos os projetos */}
+          <TouchableOpacity onPress={() => setFilter('all')} style={styles.textButton}>
+            <Text style={[
+              styles.filterText, 
+              { color: filter === 'all' ? COLORS.YELLOW : COLORS.SECONDARY }
+            ]}>
+              Todos
+            </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={toggleViewForAll}>
+          {/* Ícone para expandir ou simplificar a lista */}
+          <TouchableOpacity onPress={toggleViewForAll} style={{margin:5}}>
             <MaterialIcons 
               name={isSimplified ? "expand-more" : "expand-less"} 
               size={36} 
@@ -68,7 +82,6 @@ export default function HomeScreen() {
       <FlatList
         data={filterGoals()} // Aplicar o filtro aos dados
         keyExtractor={item => item.id.toString()}
-        
         renderItem={({ item }) => (
           <Card
             id={item.id}
@@ -102,23 +115,26 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent:'space-around',
+    justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
     padding: 0,
     elevation: 2, // Para adicionar sombra ao cabeçalho
     marginBottom: 10,
   },
-  headerTitle: {
-    fontSize: 20,
-    margin: 5,
-    marginRight:10,
-    fontWeight: 'bold',
-    fontFamily: 'Barlow-Condensed',
-  },
-  iconGroup: {
+  textGroup: {
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 10,
+  },
+  textButton: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginHorizontal: '5%', // Espaçamento entre os textos
+  },
+  filterText: {
+    fontSize: 16,
+    fontFamily: 'Barlow-Condensed', // Aplicar fonte "Barlow Condensed"
+    fontWeight: 'bold',
   },
 });
